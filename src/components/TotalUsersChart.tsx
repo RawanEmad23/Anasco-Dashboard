@@ -11,9 +11,6 @@ import {
   ResponsiveContainer,
 } from 'recharts';
 
-import { TooltipContentProps } from 'recharts/types/component/Tooltip';
-import { ValueType, NameType } from 'recharts/types/component/DefaultTooltipContent';
-
 const data = [
   { name: 'Jan', currentWeek: 12000000, previousWeek: 8000000 },
   { name: 'Feb', currentWeek: 9000000, previousWeek: 18000000 },
@@ -26,7 +23,7 @@ const data = [
 
 const formatYAxis = (tick: number) => `${tick / 1000000}M`;
 
-const CustomTooltip = ({ active, payload }: TooltipContentProps<ValueType, NameType>) => {
+const CustomTooltip = ({ active, payload }: any) => {
   if (active && payload && payload.length) {
     return (
       <div className="bg-[#3d3d3d] text-white text-sm px-3 py-1 rounded-md shadow">
