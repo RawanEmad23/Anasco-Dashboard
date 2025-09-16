@@ -6,6 +6,7 @@ The design is responsive and works on both large and small screens.
 
 ---
 
+
 ## 🚀 Getting Started
 
 Follow these steps to run the project locally:
