@@ -1,4 +1,5 @@
 'use client';
+
 import {
   LineChart,
   Line,
@@ -7,7 +8,10 @@ import {
   CartesianGrid,
   Tooltip,
   ResponsiveContainer,
+  TooltipProps,
 } from 'recharts';
+
+import { ValueType, NameType } from 'recharts/types/component/DefaultTooltipContent';
 
 const data = [
   { name: 'Jan', currentWeek: 12000000, previousWeek: 8000000 },
@@ -21,11 +25,16 @@ const data = [
 
 const formatYAxis = (tick: number) => `${tick / 1000000}M`;
 
-const CustomTooltip = ({ active, payload }: any) => {
+const CustomTooltip = ({
+  active,
+  payload,
+}: TooltipProps<ValueType, NameType>) => {
   if (active && payload && payload.length) {
     return (
       <div className="bg-[#3d3d3d] text-white text-sm px-3 py-1 rounded-md shadow">
-        {payload[0].value.toLocaleString()}
+        {typeof payload[0].value === 'number'
+          ? payload[0].value.toLocaleString()
+          : payload[0].value}
       </div>
     );
   }
