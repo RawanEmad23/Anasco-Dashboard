@@ -5,7 +5,6 @@ import {
   Pie,
   Cell,
   Tooltip,
-  Legend,
 } from 'recharts';
 
 const data = [
@@ -19,9 +18,7 @@ const COLORS = ['#000000', '#C3F7C3', '#A8B3FF', '#B8E9F5'];
 
 export default function Radialchart() {
   return (
-    
     <div className="bg-[#f7f9fb] rounded-xl p-6 flex flex-col md:flex-row items-center">
-    
       <PieChart width={200} height={200}>
         <Pie
           data={data}
@@ -33,7 +30,11 @@ export default function Radialchart() {
           dataKey="value"
         >
           {data.map((entry, index) => (
-            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} cornerRadius={5} />
+            <Cell
+              key={`cell-${index}`}
+              fill={COLORS[index % COLORS.length]}
+              // cornerRadius={5} ← ❌ تم حذفه لأنه غير مدعوم
+            />
           ))}
         </Pie>
         <Tooltip />
