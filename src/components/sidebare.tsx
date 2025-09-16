@@ -1,28 +1,31 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { FiHome } from "react-icons/fi"
 import { IoIosArrowDown, IoIosArrowForward } from "react-icons/io"
 import Image from "next/image"
 import clsx from "clsx"
-import { RiShoppingBag4Line } from "react-icons/ri";
-import { BsFolder } from "react-icons/bs";
-import { FaBookOpen } from "react-icons/fa";
-import { ImProfile } from "react-icons/im";
-
-import { RiAccountBoxFill } from "react-icons/ri";
-import { PiUsersThree } from "react-icons/pi";
-
-import { TiMessages } from "react-icons/ti";
-
+import { RiShoppingBag4Line } from "react-icons/ri"
+import { BsFolder } from "react-icons/bs"
+import { FaBookOpen } from "react-icons/fa"
+import { ImProfile } from "react-icons/im"
+import { RiAccountBoxFill } from "react-icons/ri"
+import { PiUsersThree } from "react-icons/pi"
+import { TiMessages } from "react-icons/ti"
 
 interface SidebarProps {
   open: boolean
-  onClose?: () => void 
+  onClose?: () => void
 }
 
 export default function Sidebar({ open, onClose }: SidebarProps) {
   const [openMenus, setOpenMenus] = useState<{ [key: string]: boolean }>({})
+
+  useEffect(() => {
+   
+    setOpenMenus({})
+
+  }, [])
 
   const toggleMenu = (key: string) => {
     setOpenMenus((prev) => ({ ...prev, [key]: !prev[key] }))
@@ -105,6 +108,7 @@ export default function Sidebar({ open, onClose }: SidebarProps) {
         onClick={onClose}
       />
 
+     
       <div
         className={clsx(
           "fixed md:relative z-40 bg-white border-r border-gray-300 transition-all duration-300 flex flex-col p-3 h-full",
@@ -113,7 +117,7 @@ export default function Sidebar({ open, onClose }: SidebarProps) {
             : "w-0 -translate-x-full md:w-20 md:translate-x-0"
         )}
       >
-    
+       
         <div className="flex items-center gap-3 p-4 ">
           <Image
             src="/logo.png"
@@ -131,27 +135,27 @@ export default function Sidebar({ open, onClose }: SidebarProps) {
           </h1>
         </div>
 
+      
         {open && (
           <div className="mb-6">
             <div className="flex items-center justify-around text-sm text-gray-600">
               <span className=" text-[#a4a4a4]">Favorite</span>
               <span className=" text-[#d2d2d2]">Recently</span>
             </div>
-        <ul className="mt-2 text-sm space-y-1 text-gray-700 px-8">
-  <li className="flex items-center hover:bg-gray-200 p-1 rounded">
-    <span className="w-2 h-2 rounded-full bg-[#d2d2d2] mr-2"></span>
-    Projects
-  </li>
-  <li className="flex items-center hover:bg-gray-200 p-1 rounded">
-    <span className="w-2 h-2 rounded-full bg-[#d2d2d2] mr-2"></span>
-    Overview
-  </li>
-</ul>
-
+            <ul className="mt-2 text-sm space-y-1 text-gray-700 px-8">
+              <li className="flex items-center hover:bg-gray-200 p-1 rounded">
+                <span className="w-2 h-2 rounded-full bg-[#d2d2d2] mr-2"></span>
+                Projects
+              </li>
+              <li className="flex items-center hover:bg-gray-200 p-1 rounded">
+                <span className="w-2 h-2 rounded-full bg-[#d2d2d2] mr-2"></span>
+                Overview
+              </li>
+            </ul>
           </div>
         )}
 
-        
+       
         {sections.map((section) => (
           <div key={section.title} className="mb-4">
             <h2 className="text-gray-400 text-xs font-semibold tracking-wide px-2 mb-3 select-none">
