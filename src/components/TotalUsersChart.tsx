@@ -1,5 +1,6 @@
 'use client';
 
+import React from 'react';
 import {
   LineChart,
   Line,
@@ -8,9 +9,9 @@ import {
   CartesianGrid,
   Tooltip,
   ResponsiveContainer,
-  TooltipProps,
 } from 'recharts';
 
+import { TooltipContentProps } from 'recharts/types/component/Tooltip';
 import { ValueType, NameType } from 'recharts/types/component/DefaultTooltipContent';
 
 const data = [
@@ -25,20 +26,14 @@ const data = [
 
 const formatYAxis = (tick: number) => `${tick / 1000000}M`;
 
-const CustomTooltip = ({
-  active,
-  payload,
-}: TooltipProps<ValueType, NameType>) => {
+const CustomTooltip = ({ active, payload }: TooltipContentProps<ValueType, NameType>) => {
   if (active && payload && payload.length) {
     return (
       <div className="bg-[#3d3d3d] text-white text-sm px-3 py-1 rounded-md shadow">
-        {typeof payload[0].value === 'number'
-          ? payload[0].value.toLocaleString()
-          : payload[0].value}
+        {payload[0].value.toLocaleString()}
       </div>
     );
   }
-
   return null;
 };
 
@@ -55,7 +50,6 @@ export default function TotalUsersChart() {
           <XAxis dataKey="name" />
           <YAxis tickFormatter={formatYAxis} domain={[0, 30000000]} />
           <Tooltip content={<CustomTooltip />} />
-
           <Line
             type="monotone"
             dataKey="previousWeek"
@@ -64,7 +58,6 @@ export default function TotalUsersChart() {
             dot={{ r: 4, stroke: 'white', strokeWidth: 2 }}
             activeDot={{ r: 6, stroke: 'white', strokeWidth: 2 }}
           />
-
           <Line
             type="monotone"
             dataKey="currentWeek"
