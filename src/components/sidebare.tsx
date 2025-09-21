@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react"
 import { FiHome } from "react-icons/fi"
 import { IoIosArrowDown, IoIosArrowForward } from "react-icons/io"
-import { IoMdClose } from "react-icons/io" // ✅ أيقونة الإغلاق
+import { IoMdClose } from "react-icons/io"
 import Image from "next/image"
 import clsx from "clsx"
 import { RiShoppingBag4Line, RiAccountBoxFill } from "react-icons/ri"
@@ -98,7 +98,7 @@ export default function Sidebar({ open, onClose }: SidebarProps) {
 
   return (
     <>
-      
+    
       <div
         className={clsx(
           "fixed inset-0 z-30 bg-black transition-opacity md:hidden",
@@ -107,26 +107,28 @@ export default function Sidebar({ open, onClose }: SidebarProps) {
         onClick={onClose}
       />
 
-   
+      
       <div
         className={clsx(
-          "fixed md:relative z-40 bg-white border-r border-gray-300 transition-all duration-300 flex flex-col p-3 h-full",
+          "fixed md:relative z-40 bg-white border-r border-gray-300 transition-all duration-300 flex flex-col p-3 h-full overflow-y-auto",
           open
             ? "translate-x-0 w-[235px]"
             : "-translate-x-full w-0 overflow-hidden md:w-20 md:translate-x-0"
         )}
       >
-         {open && (
+      
+        {open && (
           <button
             onClick={onClose}
-            className="md:hidden  text-gray-500 hover:text-black p-2  mr-2"
+            className="md:hidden text-gray-500 hover:text-black p-2 mr-2"
             aria-label="Close Sidebar"
           >
             <IoMdClose size={24} />
           </button>
         )}
-     
-        <div className="flex items-center gap-3 p-4">
+
+       
+        <div className="flex items-center gap-3 p-4 flex-shrink-0">
           <Image
             src="/logo.png"
             alt="anasco logo"
@@ -144,11 +146,9 @@ export default function Sidebar({ open, onClose }: SidebarProps) {
           </h1>
         </div>
 
-      
-       
-
+   
         {open && (
-          <div className="mb-6">
+          <div className="mb-6 flex-shrink-0">
             <div className="flex items-center justify-around text-sm text-gray-600">
               <span className="text-[#a4a4a4]">Favorite</span>
               <span className="text-[#d2d2d2]">Recently</span>
@@ -166,61 +166,62 @@ export default function Sidebar({ open, onClose }: SidebarProps) {
           </div>
         )}
 
-   
-        {sections.map((section) => (
-          <div key={section.title} className="mb-4">
-   <div className="relative group">
-  {open ? (
-    <h2 className="text-gray-400 text-xs font-semibold tracking-wide mb-3 select-none px-4">
-      {section.title}
-    </h2>
-  ) : (
-    <div className="h-5 w-full mb-3 px-2 relative">
-      <div className="absolute left-full ml-2 top-1/2 -translate-y-1/2 hidden group-hover:block bg-black text-white text-xs rounded px-2 py-1 z-50 whitespace-nowrap">
-        {section.title}
-      </div>
-    </div>
-  )}
-</div>
+     
+        <div>
+          {sections.map((section) => (
+            <div key={section.title} className="mb-4">
+              <div className="relative group">
+                {open ? (
+                  <h2 className="text-gray-400 text-xs font-semibold tracking-wide mb-3 select-none px-4">
+                    {section.title}
+                  </h2>
+                ) : (
+                  <div className="h-5 w-full mb-3 px-2 relative">
+                    <div className="absolute left-full ml-2 top-1/2 -translate-y-1/2 hidden group-hover:block bg-black text-white text-xs rounded px-2 py-1 z-50 whitespace-nowrap">
+                      {section.title}
+                    </div>
+                  </div>
+                )}
+              </div>
 
-            <nav className="p-2 space-y-0.5">
-              {section.menus.map((menu) => (
-                <div key={menu.key}>
-                  <button
-                    onClick={() => toggleMenu(menu.key)}
-                    className="flex items-center justify-between w-full p-1.5 rounded-md hover:bg-gray-200"
-                  >
-                    <div className="flex items-center gap-2">
-                      {open &&
-                        (openMenus[menu.key] ? (
-                          <IoIosArrowDown />
-                        ) : (
-                          <IoIosArrowForward />
+              <nav className="p-2 space-y-0.5">
+                {section.menus.map((menu) => (
+                  <div key={menu.key}>
+                    <button
+                      onClick={() => toggleMenu(menu.key)}
+                      className="flex items-center justify-between w-full p-1.5 rounded-md hover:bg-gray-200"
+                    >
+                      <div className="flex items-center gap-2">
+                        {open &&
+                          (openMenus[menu.key] ? (
+                            <IoIosArrowDown />
+                          ) : (
+                            <IoIosArrowForward />
+                          ))}
+                        {menu.icon}
+                        {open && <span>{menu.label}</span>}
+                      </div>
+                    </button>
+
+                    {open && openMenus[menu.key] && (
+                      <div className="ml-6 mt-1 flex flex-col space-y-1 text-sm">
+                        {menu.children.map((child) => (
+                          <a
+                            key={child}
+                            href="#"
+                            className="p-1 rounded hover:bg-gray-200"
+                          >
+                            {child}
+                          </a>
                         ))}
-                      {menu.icon}
-                      {open && <span>{menu.label}</span>}
-                    </div>
-                  </button>
-
-                  
-                  {open && openMenus[menu.key] && (
-                    <div className="ml-6 mt-1 flex flex-col space-y-1 text-sm">
-                      {menu.children.map((child) => (
-                        <a
-                          key={child}
-                          href="#"
-                          className="p-1 rounded hover:bg-gray-200"
-                        >
-                          {child}
-                        </a>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              ))}
-            </nav>
-          </div>
-        ))}
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </nav>
+            </div>
+          ))}
+        </div>
       </div>
     </>
   )
